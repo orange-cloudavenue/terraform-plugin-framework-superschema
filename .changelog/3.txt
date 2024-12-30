@@ -1,0 +1,7 @@
+```release-note:note
+`core` - The `FrangipaneTeam/terraform-plugin-framework-superschema`  has been renamed to `orange-cloudavenue/terraform-plugin-framework-superschema`. The plugin has been moved to be under the `orange-cloudavenue` organization.
+```
+
+```release-note:breaking-change
+`go` - Bump golang version from `1.21.0` to `1.22.0`.
+```
