@@ -1,15 +1,15 @@
 <div align="center">
-    <a href="https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/releases/latest">
-      <img alt="Latest release" src="https://img.shields.io/github/v/release/FrangipaneTeam/terraform-plugin-framework-superschema?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41&include_prerelease&sort=semver" />
+    <a href="https://github.com/orange-cloudavenue/terraform-plugin-framework-superschema/releases/latest">
+      <img alt="Latest release" src="https://img.shields.io/github/v/release/orange-cloudavenue/terraform-plugin-framework-superschema?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41&include_prerelease&sort=semver" />
     </a>
-    <a href="https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/pulse">
-      <img alt="Last commit" src="https://img.shields.io/github/last-commit/FrangipaneTeam/terraform-plugin-framework-superschema?style=for-the-badge&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/>
+    <a href="https://github.com/orange-cloudavenue/terraform-plugin-framework-superschema/pulse">
+      <img alt="Last commit" src="https://img.shields.io/github/last-commit/orange-cloudavenue/terraform-plugin-framework-superschema?style=for-the-badge&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/>
     </a>
-    <a href="https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/stargazers">
-      <img alt="Stars" src="https://img.shields.io/github/stars/FrangipaneTeam/terraform-plugin-framework-superschema?style=for-the-badge&logo=starship&color=c69ff5&logoColor=D9E0EE&labelColor=302D41" />
+    <a href="https://github.com/orange-cloudavenue/terraform-plugin-framework-superschema/stargazers">
+      <img alt="Stars" src="https://img.shields.io/github/stars/orange-cloudavenue/terraform-plugin-framework-superschema?style=for-the-badge&logo=starship&color=c69ff5&logoColor=D9E0EE&labelColor=302D41" />
     </a>
-    <a href="https://github.com/FrangipaneTeam/terraform-plugin-framework-superschema/issues">
-      <img alt="Issues" src="https://img.shields.io/github/issues/FrangipaneTeam/terraform-plugin-framework-superschema?style=for-the-badge&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" />
+    <a href="https://github.com/orange-cloudavenue/terraform-plugin-framework-superschema/issues">
+      <img alt="Issues" src="https://img.shields.io/github/issues/orange-cloudavenue/terraform-plugin-framework-superschema?style=for-the-badge&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" />
     </a>
 </div>
 

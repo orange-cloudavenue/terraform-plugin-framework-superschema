@@ -8,10 +8,12 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
 //go:generate go run template.go
@@ -50,7 +52,6 @@ type SchemaDetails struct {
 }
 
 func (s Schema) GetResource(ctx context.Context) schemaR.Schema {
-
 	if s.Resource.MarkdownDescription != "" {
 		s.Common.MarkdownDescription = addToDescription(s.Common.MarkdownDescription, s.Resource.MarkdownDescription)
 	}
