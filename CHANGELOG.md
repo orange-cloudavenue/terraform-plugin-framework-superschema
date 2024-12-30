@@ -1,4 +1,5 @@
-## 1.9.0 (Unreleased)
+## 1.10.0 (Unreleased)
+## 1.9.0 (December 30, 2024)
 ### :rotating_light: **Breaking Changes**
 
 * `go` - Bump golang version from `1.21.0` to `1.22.0`. (GH-3)
