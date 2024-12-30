@@ -4,11 +4,11 @@ package superschema
 import (
 	"context"
 
-	"github.com/FrangipaneTeam/terraform-plugin-framework-supertypes"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+	"github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
 )
 
 var _ Attribute = SuperListAttribute{}

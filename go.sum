@@ -1,5 +1,3 @@
-github.com/FrangipaneTeam/terraform-plugin-framework-supertypes v0.4.0 h1:5lFfjKOhBxBQNwQ63PZWBc5Unqgi5ppYq9RDoN05N+k=
-github.com/FrangipaneTeam/terraform-plugin-framework-supertypes v0.4.0/go.mod h1:klzXBi/0nMGXBh4bzRjP2wef+HE6rfCMia81Glc2+eY=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -31,6 +29,8 @@ github.com/mattn/go-isatty v0.0.20 h1:xfD0iDuEKnDkl03q4limB+vH+GxLEtL/jb4xVJSWWE
 github.com/mattn/go-isatty v0.0.20/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
 github.com/mitchellh/go-testing-interface v1.14.1 h1:jrgshOhYAUVNMAJiKbEu7EqAwgJJ2JqpQmpLJOu07cU=
 github.com/mitchellh/go-testing-interface v1.14.1/go.mod h1:gfgS7OtZj6MA4U1UrDRp04twqAjfvlZyCfX3sDjEym8=
+github.com/orange-cloudavenue/terraform-plugin-framework-supertypes v0.5.0 h1:0rogLDkZ5gbdEs0zNQ3orqLaLk5gwwF+8LxsnqWCcN8=
+github.com/orange-cloudavenue/terraform-plugin-framework-supertypes v0.5.0/go.mod h1:16/Jv7sxRN3PhKkb7I2LAi7gtpQju65Kd+jmlE2st04=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

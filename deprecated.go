@@ -153,7 +153,6 @@ type DeprecatedResource struct {
 }
 
 func (d *DeprecatedResource) computeDeprecatedDocumentation(isResource bool) string {
-
 	if (!d.ComputeMarkdownDeprecationMessage && d.MarkdownDeprecationMessage == "") || (d.Renamed && d.TargetResourceName == "" && d.ComputeMarkdownDeprecationMessage) || d.TargetRelease == "" {
 		return ""
 	}
@@ -204,7 +203,6 @@ func (d *DeprecatedResource) computeDeprecatedDocumentation(isResource bool) str
 
 // GetDeprecationMessage returns the deprecation message for the attribute.
 func (d *DeprecatedResource) GetDeprecationMessage() string {
-
 	if d.LinkToMigrationGuide != "" {
 		return fmt.Sprintf("%s. See the migration guide(%s) for more information.", d.DeprecationMessage, d.LinkToMigrationGuide)
 	}
