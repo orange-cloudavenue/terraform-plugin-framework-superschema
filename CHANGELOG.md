@@ -1,8 +1,10 @@
 ## 1.9.0 (Unreleased)
+### :rotating_light: **Breaking Changes**
 
-### :dependabot: **Dependencies**
+* `go` - Bump golang version from `1.21.0` to `1.22.0`. (GH-3)
+### :information_source: **Notes**
 
-* deps: bumps github.com/hashicorp/terraform-plugin-framework from 1.11.0 to 1.13.0 (GH-2)
+* `core` - The `FrangipaneTeam/terraform-plugin-framework-superschema`  has been renamed to `orange-cloudavenue/terraform-plugin-framework-superschema`. The plugin has been moved to be under the `orange-cloudavenue` organization. (GH-3)
 
 ## 1.8.1 (December  6, 2024)
 
