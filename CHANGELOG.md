@@ -1,4 +1,8 @@
 ## 1.10.0 (Unreleased)
+### :information_source: **Notes**
+
+* `Go` - Fixed a bad module name in `go.mod` file. (GH-11)
+
 ## 1.9.0 (December 30, 2024)
 ### :rotating_light: **Breaking Changes**
 
