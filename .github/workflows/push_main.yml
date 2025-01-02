@@ -20,6 +20,4 @@ permissions:
 jobs:
   request-doc-update:
     name: "Request doc update"
-    uses: orange-cloudavenue/workflows/.github/workflows/doc_request-update.yml@main
-    secrets:
-      TOKEN: ${{ secrets.CHANGELOG_PAT }}
+    uses: orange-cloudavenue/workflows/.github/workflows/doc_publish.yml@main
