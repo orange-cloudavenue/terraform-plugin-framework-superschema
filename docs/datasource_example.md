@@ -1,3 +1,9 @@
+---
+icon: material/home
+hide: 
+    - navigation
+--- 
+
 # cloudavenue_iam_user (Data Source)
 
 The user data source allows you to read users in Cloud Avenue.

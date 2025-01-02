@@ -1,9 +1,53 @@
-site_name: Terraform SuperSchema
+site_name: Terraform Framework SuperSchema
+
 
 theme:
   name: material
+  palette:
+    - scheme: orangeCorp
+  features:
+    # - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - content.code.annotate
+    - header.autohide
+    - navigation.instant
+  icon:
+    repo: fontawesome/brands/github-alt
+  favicon: https://opensource.orange.com/wp-content/themes/boosted/favicon.ico
+  logo: https://boosted.orange.com/docs/5.3/assets/brand/orange-logo.svg
+
+extra_css:
+  - stylesheets/orange.css
 
 nav:
-  - Why ?: "why.md"
-  - How to use it: "getting-started.md"
-  - SuperSchema logic : "logic.md"
+  - Overview: "index.md"
+  - How to use: "getting-started.md"
+  - Logic : "logic.md"
+  - ⇗ Other projects: "https://orange-cloudavenue.github.io/projects"
+
+
+plugins:
+  - search
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+repo_url: https://github.com/orange-cloudavenue/terraform-plugin-framework-planmodifiers
+repo_name: orange-cloudavenue/terraform-plugin-framework-planmodifiers
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/orange-cloudavenue
+
+copyright: Copyright &copy; Orange 2025

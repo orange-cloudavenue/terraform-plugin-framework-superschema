@@ -24,4 +24,4 @@ This is a try to solve these issues :
 
 ## Documentation
 
-For more information about the SuperSchema, please refer to the [documentation](https://github.frangipane.io/terraform/superschema/why).
+For more information about the SuperSchema, please refer to the [documentation](https://orange-cloudavenue.github.io/terraform-plugin-framework-superschema/).

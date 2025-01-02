@@ -1,3 +1,8 @@
+---
+hide: 
+    - navigation
+--- 
+
 # Getting Started
 
 The following is a technical documentation on how to use superschema in your Terraform project.

@@ -1,3 +1,8 @@
+---
+hide: 
+    - navigation
+--- 
+
 # cloudavenue_iam_user (Resource)
 
 The user resource allows you to manage local users in Cloud Avenue.
