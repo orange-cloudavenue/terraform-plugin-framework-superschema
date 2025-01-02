@@ -1,4 +1,5 @@
 ## 1.10.0 (Unreleased)
+## 1.9.1 (January  2, 2025)
 ### :information_source: **Notes**
 
 * `Go` - Fixed a bad module name in `go.mod` file. (GH-11)
