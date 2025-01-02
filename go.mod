@@ -1,4 +1,4 @@
-module github.com/FrangipaneTeam/terraform-plugin-framework-superschema
+module github.com/orange-cloudavenue/terraform-plugin-framework-superschema
 
 go 1.22.0
 
@@ -14,7 +14,6 @@ require (
 require (
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/hashicorp/go-hclog v1.5.0 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.25.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.25.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
