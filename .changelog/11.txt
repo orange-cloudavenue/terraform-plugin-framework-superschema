@@ -1,0 +1,3 @@
+```release-note:note
+`Go` - Fixed a bad module name in `go.mod` file.
+```
