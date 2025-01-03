@@ -11,10 +11,12 @@ on:
 name: go-generate
 jobs:
   go-generate:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
       - run: go generate ./...
       - name: git diff
         run: |
