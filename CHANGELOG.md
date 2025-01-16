@@ -1,4 +1,9 @@
 ## 1.10.0 (Unreleased)
+
+### :dependabot: **Dependencies**
+
+* deps: bumps github.com/hashicorp/terraform-plugin-framework-timeouts from 0.4.1 to 0.5.0 (GH-21)
+
 ## 1.9.1 (January  2, 2025)
 ### :information_source: **Notes**
 
