@@ -6,7 +6,7 @@ toolchain go1.23.1
 
 require (
 	github.com/hashicorp/terraform-plugin-framework v1.13.0
-	github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.1
+	github.com/hashicorp/terraform-plugin-framework-timeouts v0.5.0
 	github.com/iancoleman/strcase v0.3.0
 	github.com/orange-cloudavenue/terraform-plugin-framework-supertypes v0.5.0
 )
