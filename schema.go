@@ -42,7 +42,7 @@ const (
 	// ExactlyOneOfValidator have uppercase in the beginning of the name because it is a private type in terraform-plugin-framework.(https://github.com/hashicorp/terraform-plugin-framework-validators/blob/main/stringvalidator/exactly_one_of.go)
 	validatorExactlyOneOf = "ExactlyOneOfValidator"
 
-	forceNewDesc = "(ForceNew)"
+	forceNewDesc = `<i style="color:red;font-weight: bold">(ForceNew)</i>`
 )
 
 type Schema struct {
@@ -263,11 +263,11 @@ func genResourceAttrDescription[V validator.Describer, P planmodifier.Describer]
 	validatorDescription := updateValidatorsDescription(ctx, validators)
 
 	description = pmDescription
-	if validatorDescription != "" {
-		description = addToDescriptionWithDot(description, validatorDescription)
-	}
 	if defaultVDescription != "" {
 		description = addToDescriptionWithDot(description, defaultVDescription)
+	}
+	if validatorDescription != "" {
+		description = addToDescriptionWithDot(description, validatorDescription)
 	}
 	if deprecatedDescription != "" {
 		description = addToDescriptionWithDot(description, deprecatedDescription)
