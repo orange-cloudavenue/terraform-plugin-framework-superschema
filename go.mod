@@ -8,11 +8,11 @@ require (
 	github.com/hashicorp/terraform-plugin-framework v1.14.1
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.5.0
 	github.com/iancoleman/strcase v0.3.0
-	github.com/orange-cloudavenue/terraform-plugin-framework-supertypes v0.5.0
+	github.com/orange-cloudavenue/terraform-plugin-framework-supertypes v1.0.0
 )
 
 require (
-	github.com/fatih/color v1.17.0 // indirect
+	github.com/fatih/color v1.18.0 // indirect
 	github.com/hashicorp/go-hclog v1.5.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.26.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
