@@ -3,5 +3,5 @@
 ```
 
 ```release-note:feature
- - Support `WriteOnly` resource attribute.
+Support `WriteOnly` property on all types (expect Set/SetNested/SetNestedValueOf in accordance with the WriteOnly property defined by Hashicorp).
 ```
