@@ -1,4 +1,10 @@
 ## 1.11.0 (Unreleased)
+
+### :rocket: **New Features**
+
+* Support `WriteOnly` property on all types (expect Set/SetNested/SetNestedValueOf in accordance with the WriteOnly property defined by Hashicorp). (GH-32)
+* `Int32Attribute` / `SuperInt32Attribute` - Support new `int32` attribute. (GH-32)
+
 ## 1.10.1 (March  6, 2025)
 ### :rotating_light: **Breaking Changes**
 
