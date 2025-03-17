@@ -8,7 +8,7 @@
 version: "3"
 
 # * Import
-includes:
+includes: 
   go: ".taskfiles/golang.yml"
   license: ".taskfiles/license.yml"
   pre-commit: ".taskfiles/pre-commit.yml"
