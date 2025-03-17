@@ -57,6 +57,7 @@ func (s ListNestedAttribute) GetResource(ctx context.Context) schemaR.Attribute 
 		Optional:            computeIsOptional(common, resource),
 		Computed:            computeIsComputed(common, resource),
 		Sensitive:           computeIsSensitive(common, resource),
+		WriteOnly:           computeIsWriteOnly(common, resource),
 		MarkdownDescription: computeMarkdownDescription(common, resource),
 		Description:         computeDescription(common, resource),
 		DeprecationMessage:  computeDeprecationMessage(common, resource),

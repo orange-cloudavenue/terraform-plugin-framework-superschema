@@ -1,3 +1,5 @@
+//go:build ignore
+
 /*
  * SPDX-FileCopyrightText: Copyright (c) 2025 Orange
  * SPDX-License-Identifier: Mozilla Public License 2.0
@@ -6,8 +8,6 @@
  * the text of which is available at https://www.mozilla.org/en-US/MPL/2.0/
  * or see the "LICENSE" file for more details.
  */
-
-//go:build ignore
 
 // go generate
 package main
@@ -42,7 +42,7 @@ var templateFuncs = template.FuncMap{
 
 func main() {
 	fmt.Println("generating types files...")
-	tA := []string{"string", "bool", "float64", "int64", "list", "list_nested", "object", "single_nested", "set", "set_nested", "number", "map", "map_nested"}
+	tA := []string{"string", "bool", "float64", "int32", "int64", "list", "list_nested", "object", "single_nested", "set", "set_nested", "number", "map", "map_nested"}
 
 	for _, t := range tA {
 		infos := templateInfos{

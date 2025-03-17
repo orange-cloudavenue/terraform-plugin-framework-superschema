@@ -17,30 +17,30 @@ import (
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
-var _ Attribute = ListAttribute{}
+var _ Attribute = Int32Attribute{}
 
-type ListAttribute struct {
+type Int32Attribute struct {
 	Deprecated *Deprecated
-	Common     *schemaR.ListAttribute
-	Resource   *schemaR.ListAttribute
-	DataSource *schemaD.ListAttribute
+	Common     *schemaR.Int32Attribute
+	Resource   *schemaR.Int32Attribute
+	DataSource *schemaD.Int32Attribute
 }
 
 // IsResource returns true if the attribute is a resource attribute.
-func (s ListAttribute) IsResource() bool {
+func (s Int32Attribute) IsResource() bool {
 	return s.Resource != nil || s.Common != nil
 }
 
 // IsDataSource returns true if the attribute is a data source attribute.
-func (s ListAttribute) IsDataSource() bool {
+func (s Int32Attribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
 }
 
 //nolint:dupl
-func (s ListAttribute) GetResource(ctx context.Context) schemaR.Attribute {
+func (s Int32Attribute) GetResource(ctx context.Context) schemaR.Attribute {
 	var (
-		common   schemaR.ListAttribute
-		resource schemaR.ListAttribute
+		common   schemaR.Int32Attribute
+		resource schemaR.Int32Attribute
 	)
 
 	if s.Common != nil {
@@ -51,7 +51,7 @@ func (s ListAttribute) GetResource(ctx context.Context) schemaR.Attribute {
 		resource = *s.Resource
 	}
 
-	a := schemaR.ListAttribute{
+	a := schemaR.Int32Attribute{
 		Required:            computeIsRequired(common, resource),
 		Optional:            computeIsOptional(common, resource),
 		Computed:            computeIsComputed(common, resource),
@@ -60,13 +60,6 @@ func (s ListAttribute) GetResource(ctx context.Context) schemaR.Attribute {
 		MarkdownDescription: computeMarkdownDescription(common, resource),
 		Description:         computeDescription(common, resource),
 		DeprecationMessage:  computeDeprecationMessage(common, resource),
-		ElementType:         common.ElementType,
-	}
-
-	if s.Resource != nil {
-		if s.Resource.ElementType != nil {
-			a.ElementType = s.Resource.ElementType
-		}
 	}
 
 	a.Validators = append(a.Validators, common.Validators...)
@@ -93,10 +86,10 @@ func (s ListAttribute) GetResource(ctx context.Context) schemaR.Attribute {
 }
 
 //nolint:dupl
-func (s ListAttribute) GetDataSource(ctx context.Context) schemaD.Attribute {
+func (s Int32Attribute) GetDataSource(ctx context.Context) schemaD.Attribute {
 	var (
-		common     schemaR.ListAttribute
-		dataSource schemaD.ListAttribute
+		common     schemaR.Int32Attribute
+		dataSource schemaD.Int32Attribute
 	)
 
 	if s.Common != nil {
@@ -107,7 +100,7 @@ func (s ListAttribute) GetDataSource(ctx context.Context) schemaD.Attribute {
 		dataSource = *s.DataSource
 	}
 
-	a := schemaD.ListAttribute{
+	a := schemaD.Int32Attribute{
 		Required:            computeIsRequired(common, dataSource),
 		Optional:            computeIsOptional(common, dataSource),
 		Computed:            computeIsComputed(common, dataSource),
@@ -115,12 +108,6 @@ func (s ListAttribute) GetDataSource(ctx context.Context) schemaD.Attribute {
 		MarkdownDescription: computeMarkdownDescription(common, dataSource),
 		Description:         computeDescription(common, dataSource),
 		DeprecationMessage:  computeDeprecationMessage(common, dataSource),
-		ElementType:         common.ElementType,
-	}
-	if s.DataSource != nil {
-		if s.DataSource.ElementType != nil {
-			a.ElementType = s.DataSource.ElementType
-		}
 	}
 
 	a.Validators = append(a.Validators, common.Validators...)

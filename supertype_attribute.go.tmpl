@@ -49,7 +49,7 @@ func (s Super{{ .TypeName }}Attribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
 }
 
-{{- if or (eq .TypeName "String") (eq .TypeName "Number") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Object")  }}
+{{- if or (eq .TypeName "String") (eq .TypeName "Number") (eq .TypeName "Bool") (eq .TypeName "Int32") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Object")  }}
 // GetCustomType returns the custom type of the attribute.
 func (s Super{{ .TypeName }}Attribute) getCustomType() basetypes.{{ .TypeName }}Typable {
 	return supertypes.{{ .TypeName }}Type{
@@ -159,6 +159,9 @@ func (s Super{{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.
 		Optional:            computeIsOptional(common, resource),
 		Computed:            computeIsComputed(common, resource),
 		Sensitive:           computeIsSensitive(common, resource),
+	{{- if and (ne .TypeName "Set") (ne .TypeName "SetNested") }}
+		WriteOnly:           computeIsWriteOnly(common, resource),
+	{{- end }}
 		MarkdownDescription: computeMarkdownDescription(common, resource),
 		Description:         computeDescription(common, resource),
 		DeprecationMessage:  computeDeprecationMessage(common, resource),
@@ -234,7 +237,7 @@ func (s Super{{ .TypeName }}Attribute) GetResource(ctx context.Context) schemaR.
 	}
 	{{- end }}
 
-    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
+    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int32") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
 		a.CustomType = s.getCustomType().(supertypes.{{ .TypeName }}Type)
@@ -337,7 +340,7 @@ func (s Super{{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schema
 	}
     {{- end }}
 
-    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
+    {{- if or (eq .TypeName "String") (eq .TypeName "Bool") (eq .TypeName "Int32") (eq .TypeName "Int64") (eq .TypeName "Float64") (eq .TypeName "Number") }}
 	// * If user has not provided a custom type, we will use the default supertypes
 	if a.CustomType == nil {
 		a.CustomType = s.getCustomType().(supertypes.{{ .TypeName }}Type)
@@ -400,6 +403,9 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetResource(ctx context.Context) sch
 		Optional:            computeIsOptional(common, resource),
 		Computed:            computeIsComputed(common, resource),
 		Sensitive:           computeIsSensitive(common, resource),
+	{{- if and (ne .TypeName "Set") (ne .TypeName "SetNested") }}
+		WriteOnly:           computeIsWriteOnly(common, resource),
+	{{- end }}
 		MarkdownDescription: computeMarkdownDescription(common, resource),
 		Description:         computeDescription(common, resource),
 		DeprecationMessage:  computeDeprecationMessage(common, resource),

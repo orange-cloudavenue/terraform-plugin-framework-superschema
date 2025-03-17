@@ -481,4 +481,4 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/go,visualstudio,vim,macos
 #
 # auto generated files by go generate
-*_attribute.go
+# *_attribute.go
