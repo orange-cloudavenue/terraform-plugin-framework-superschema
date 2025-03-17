@@ -1,0 +1,7 @@
+```release-note:feature
+`Int32Attribute` / `SuperInt32Attribute` - Support new `int32` attribute.
+```
+
+```release-note:feature
+Support `WriteOnly` property on all types (expect Set/SetNested/SetNestedValueOf in accordance with the WriteOnly property defined by Hashicorp).
+```

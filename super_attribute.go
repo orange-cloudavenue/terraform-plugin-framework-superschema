@@ -35,6 +35,10 @@ func computeIsSensitive[X, T superAttribute](common X, resourceOrDatasource T) b
 	return common.IsSensitive() || resourceOrDatasource.IsSensitive()
 }
 
+func computeIsWriteOnly[X, T superAttribute](common X, resourceOrDatasource T) bool {
+	return common.IsWriteOnly() || resourceOrDatasource.IsWriteOnly()
+}
+
 func computeMarkdownDescription[X, T superAttribute](common X, resourceOrDatasource T) string {
 	return addToDescription(common.GetMarkdownDescription(), resourceOrDatasource.GetMarkdownDescription())
 }
