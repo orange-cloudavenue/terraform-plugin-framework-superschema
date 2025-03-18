@@ -8,7 +8,7 @@ require (
 	github.com/hashicorp/terraform-plugin-framework v1.14.1
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.5.0
 	github.com/iancoleman/strcase v0.3.0
-	github.com/orange-cloudavenue/terraform-plugin-framework-supertypes v1.0.0
+	github.com/orange-cloudavenue/terraform-plugin-framework-supertypes v1.1.0
 )
 
 require (
