@@ -14,6 +14,7 @@ import (
 	"context"
 
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	schemaE "github.com/hashicorp/terraform-plugin-framework/ephemeral/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
@@ -24,6 +25,7 @@ type BoolAttribute struct {
 	Common     *schemaR.BoolAttribute
 	Resource   *schemaR.BoolAttribute
 	DataSource *schemaD.BoolAttribute
+	Ephemeral  *schemaE.BoolAttribute
 }
 
 // IsResource returns true if the attribute is a resource attribute.
@@ -34,6 +36,11 @@ func (s BoolAttribute) IsResource() bool {
 // IsDataSource returns true if the attribute is a data source attribute.
 func (s BoolAttribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
+}
+
+// IsEphemeral returns true if the attribute is a ephemeral attribute.
+func (s BoolAttribute) IsEphemeral() bool {
+	return s.Ephemeral != nil || s.Common != nil
 }
 
 //nolint:dupl
@@ -119,6 +126,44 @@ func (s BoolAttribute) GetDataSource(ctx context.Context) schemaD.Attribute {
 		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	return a
+}
+
+//nolint:dupl
+func (s BoolAttribute) GetEphemeral(ctx context.Context) schemaE.Attribute {
+	var (
+		common    schemaR.BoolAttribute
+		ephemeral schemaE.BoolAttribute
+	)
+
+	if s.Common != nil {
+		common = *s.Common
+	}
+
+	if s.DataSource != nil {
+		ephemeral = *s.Ephemeral
+	}
+
+	a := schemaE.BoolAttribute{
+		Required:            computeIsRequired(common, ephemeral),
+		Optional:            computeIsOptional(common, ephemeral),
+		Computed:            computeIsComputed(common, ephemeral),
+		Sensitive:           computeIsSensitive(common, ephemeral),
+		MarkdownDescription: computeMarkdownDescription(common, ephemeral),
+		Description:         computeDescription(common, ephemeral),
+		DeprecationMessage:  computeDeprecationMessage(common, ephemeral),
+	}
+
+	a.Validators = append(a.Validators, common.Validators...)
+	a.Validators = append(a.Validators, ephemeral.Validators...)
+
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }

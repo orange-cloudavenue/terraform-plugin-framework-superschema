@@ -14,6 +14,7 @@ import (
 	"context"
 
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	schemaE "github.com/hashicorp/terraform-plugin-framework/ephemeral/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	supertypes "github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
@@ -26,6 +27,7 @@ type SuperListNestedAttribute struct {
 	Common     *schemaR.ListNestedAttribute
 	Resource   *schemaR.ListNestedAttribute
 	DataSource *schemaD.ListNestedAttribute
+	Ephemeral  *schemaE.ListNestedAttribute
 	Attributes Attributes
 }
 
@@ -37,6 +39,11 @@ func (s SuperListNestedAttribute) IsResource() bool {
 // IsDataSource returns true if the attribute is a data source attribute.
 func (s SuperListNestedAttribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
+}
+
+// IsEphemeral returns true if the attribute is a ephemeral attribute.
+func (s SuperListNestedAttribute) IsEphemeral() bool {
+	return s.Ephemeral != nil || s.Common != nil
 }
 
 // GetCustomType returns the custom type of the attribute.
@@ -167,7 +174,64 @@ func (s SuperListNestedAttribute) GetDataSource(ctx context.Context) schemaD.Att
 		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	return a
+}
+
+//nolint:dupl
+func (s SuperListNestedAttribute) GetEphemeral(ctx context.Context) schemaE.Attribute {
+	var (
+		common    schemaR.ListNestedAttribute
+		ephemeral schemaE.ListNestedAttribute
+	)
+
+	if s.Common != nil {
+		common = *s.Common
+	}
+
+	if s.DataSource != nil {
+		ephemeral = *s.Ephemeral
+	}
+
+	a := schemaE.ListNestedAttribute{
+		Required:            computeIsRequired(common, ephemeral),
+		Optional:            computeIsOptional(common, ephemeral),
+		Computed:            computeIsComputed(common, ephemeral),
+		Sensitive:           computeIsSensitive(common, ephemeral),
+		MarkdownDescription: computeMarkdownDescription(common, ephemeral),
+		Description:         computeDescription(common, ephemeral),
+		DeprecationMessage:  computeDeprecationMessage(common, ephemeral),
+		NestedObject: schemaE.NestedAttributeObject{
+			Attributes: s.Attributes.process(ctx, ephemeralT).(map[string]schemaE.Attribute),
+		},
+	}
+
+	a.Validators = append(a.Validators, common.Validators...)
+	a.Validators = append(a.Validators, ephemeral.Validators...)
+
+	if s.Common != nil {
+		if s.Common.CustomType != nil {
+			a.CustomType = s.Common.CustomType
+		}
+	}
+
+	if s.Ephemeral != nil {
+		if s.Ephemeral.CustomType != nil {
+			a.CustomType = s.Ephemeral.CustomType
+		}
+	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType(a.NestedObject.Type()).(supertypes.ListNestedType)
+	}
+
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }
 
@@ -180,6 +244,7 @@ type SuperListNestedAttributeOf[T any] struct {
 	Common     *schemaR.ListNestedAttribute
 	Resource   *schemaR.ListNestedAttribute
 	DataSource *schemaD.ListNestedAttribute
+	Ephemeral  *schemaE.ListNestedAttribute
 	Attributes Attributes
 }
 
@@ -191,6 +256,11 @@ func (s SuperListNestedAttributeOf[T]) IsResource() bool {
 // IsDataSource returns true if the attribute is a data source attribute.
 func (s SuperListNestedAttributeOf[T]) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
+}
+
+// IsEphemeral returns true if the attribute is a ephemeral attribute.
+func (s SuperListNestedAttributeOf[T]) IsEphemeral() bool {
+	return s.Ephemeral != nil || s.Common != nil
 }
 
 //nolint:dupl
@@ -312,6 +382,63 @@ func (s SuperListNestedAttributeOf[T]) GetDataSource(ctx context.Context) schema
 		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	return a
+}
+
+//nolint:dupl
+func (s SuperListNestedAttributeOf[T]) GetEphemeral(ctx context.Context) schemaE.Attribute {
+	var (
+		common    schemaR.ListNestedAttribute
+		ephemeral schemaE.ListNestedAttribute
+	)
+
+	if s.Common != nil {
+		common = *s.Common
+	}
+
+	if s.DataSource != nil {
+		ephemeral = *s.Ephemeral
+	}
+
+	a := schemaE.ListNestedAttribute{
+		Required:            computeIsRequired(common, ephemeral),
+		Optional:            computeIsOptional(common, ephemeral),
+		Computed:            computeIsComputed(common, ephemeral),
+		Sensitive:           computeIsSensitive(common, ephemeral),
+		MarkdownDescription: computeMarkdownDescription(common, ephemeral),
+		Description:         computeDescription(common, ephemeral),
+		DeprecationMessage:  computeDeprecationMessage(common, ephemeral),
+		NestedObject: schemaE.NestedAttributeObject{
+			Attributes: s.Attributes.process(ctx, ephemeralT).(map[string]schemaE.Attribute),
+		},
+	}
+
+	a.Validators = append(a.Validators, common.Validators...)
+	a.Validators = append(a.Validators, ephemeral.Validators...)
+
+	if s.Common != nil {
+		if s.Common.CustomType != nil {
+			a.CustomType = s.Common.CustomType
+		}
+	}
+
+	if s.Ephemeral != nil {
+		if s.Ephemeral.CustomType != nil {
+			a.CustomType = s.Ephemeral.CustomType
+		}
+	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = supertypes.NewListNestedObjectTypeOf[T](ctx)
+	}
+
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }
