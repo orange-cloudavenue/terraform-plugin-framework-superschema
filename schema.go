@@ -20,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	schemaE "github.com/hashicorp/terraform-plugin-framework/ephemeral/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -49,6 +50,7 @@ type Schema struct {
 	Common     SchemaDetails
 	Resource   SchemaDetails
 	DataSource SchemaDetails
+	Ephemeral  SchemaDetails
 	Attributes Attributes
 }
 
@@ -107,6 +109,27 @@ func (s Schema) GetDataSource(ctx context.Context) schemaD.Schema {
 		MarkdownDescription: s.Common.MarkdownDescription,
 		DeprecationMessage:  s.Common.Deprecated.GetDeprecationMessage(),
 		Attributes:          s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
+	}
+}
+
+func (s Schema) GetEphemeral(ctx context.Context) schemaE.Schema {
+	if s.Ephemeral.MarkdownDescription != "" {
+		s.Common.MarkdownDescription = addToDescription(s.Common.MarkdownDescription, s.Ephemeral.MarkdownDescription)
+	}
+	// * Deprecated is a struct that contains the deprecation message and the target resource name.
+	if s.Ephemeral.DeprecationMessage != "" {
+		s.Common.DeprecationMessage = s.Ephemeral.DeprecationMessage
+	}
+	if s.Ephemeral.Deprecated != (DeprecatedResource{}) {
+		s.Common.Deprecated = s.Ephemeral.Deprecated
+	}
+	if s.Common.Deprecated != (DeprecatedResource{}) {
+		s.Common.MarkdownDescription = addToDescription(s.Common.MarkdownDescription, s.Common.Deprecated.GetMarkdownDeprecationMessage(true))
+	}
+	return schemaE.Schema{
+		MarkdownDescription: s.Common.MarkdownDescription,
+		DeprecationMessage:  s.Common.Deprecated.GetDeprecationMessage(),
+		Attributes:          s.Attributes.process(ctx, ephemeralT).(map[string]schemaE.Attribute),
 	}
 }
 
@@ -277,7 +300,7 @@ func genResourceAttrDescription[V validator.Describer, P planmodifier.Describer]
 	return description
 }
 
-func genDataSourceAttrDescription[V validator.Describer](ctx context.Context, description, deprecatedDescription string, validators []V) string {
+func genDataSourceOrEphemeralAttrDescription[V validator.Describer](ctx context.Context, description, deprecatedDescription string, validators []V) string {
 	validatorDescription := updateValidatorsDescription(ctx, validators)
 	if validatorDescription != "" {
 		description = addToDescriptionWithDot(description, validatorDescription)

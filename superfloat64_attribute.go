@@ -14,6 +14,7 @@ import (
 	"context"
 
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	schemaE "github.com/hashicorp/terraform-plugin-framework/ephemeral/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	supertypes "github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
@@ -26,6 +27,7 @@ type SuperFloat64Attribute struct {
 	Common     *schemaR.Float64Attribute
 	Resource   *schemaR.Float64Attribute
 	DataSource *schemaD.Float64Attribute
+	Ephemeral  *schemaE.Float64Attribute
 }
 
 // IsResource returns true if the attribute is a resource attribute.
@@ -36,6 +38,11 @@ func (s SuperFloat64Attribute) IsResource() bool {
 // IsDataSource returns true if the attribute is a data source attribute.
 func (s SuperFloat64Attribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
+}
+
+// IsEphemeral returns true if the attribute is a ephemeral attribute.
+func (s SuperFloat64Attribute) IsEphemeral() bool {
+	return s.Ephemeral != nil || s.Common != nil
 }
 
 // GetCustomType returns the custom type of the attribute.
@@ -158,6 +165,60 @@ func (s SuperFloat64Attribute) GetDataSource(ctx context.Context) schemaD.Attrib
 		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	return a
+}
+
+//nolint:dupl
+func (s SuperFloat64Attribute) GetEphemeral(ctx context.Context) schemaE.Attribute {
+	var (
+		common    schemaR.Float64Attribute
+		ephemeral schemaE.Float64Attribute
+	)
+
+	if s.Common != nil {
+		common = *s.Common
+	}
+
+	if s.DataSource != nil {
+		ephemeral = *s.Ephemeral
+	}
+
+	a := schemaE.Float64Attribute{
+		Required:            computeIsRequired(common, ephemeral),
+		Optional:            computeIsOptional(common, ephemeral),
+		Computed:            computeIsComputed(common, ephemeral),
+		Sensitive:           computeIsSensitive(common, ephemeral),
+		MarkdownDescription: computeMarkdownDescription(common, ephemeral),
+		Description:         computeDescription(common, ephemeral),
+		DeprecationMessage:  computeDeprecationMessage(common, ephemeral),
+	}
+
+	a.Validators = append(a.Validators, common.Validators...)
+	a.Validators = append(a.Validators, ephemeral.Validators...)
+
+	if s.Common != nil {
+		if s.Common.CustomType != nil {
+			a.CustomType = s.Common.CustomType
+		}
+	}
+
+	if s.Ephemeral != nil {
+		if s.Ephemeral.CustomType != nil {
+			a.CustomType = s.Ephemeral.CustomType
+		}
+	}
+	// * If user has not provided a custom type, we will use the default supertypes
+	if a.CustomType == nil {
+		a.CustomType = s.getCustomType().(supertypes.Float64Type)
+	}
+
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }
