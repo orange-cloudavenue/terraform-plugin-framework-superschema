@@ -11,12 +11,14 @@ package superschema
 
 import (
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	schemaE "github.com/hashicorp/terraform-plugin-framework/ephemeral/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
 type superAttribute interface {
 	schemaR.Attribute
 	schemaD.Attribute
+	schemaE.Attribute
 }
 
 func computeIsComputed[X, T superAttribute](common X, resourceOrDatasource T) bool {
