@@ -1,0 +1,3 @@
+```release-note:dependency
+deps: bumps actions/checkout, actions/setup-go, crazy-max/ghaction-github-labeler from  to 
+```
