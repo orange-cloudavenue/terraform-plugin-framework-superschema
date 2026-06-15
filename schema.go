@@ -201,7 +201,7 @@ func addEndDot(description string) string {
 // getType returns the type of the given variable as a string.
 func getType(myvar interface{}) string {
 	t := reflect.TypeOf(myvar)
-	if t.Kind() == reflect.Ptr {
+	if t.Kind() == reflect.Pointer {
 		return "*" + t.Elem().Name()
 	}
 	return t.Name()
