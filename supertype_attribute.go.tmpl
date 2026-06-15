@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2025 Orange
+ * SPDX-FileCopyrightText: Copyright (c) 2026 Orange
  * SPDX-License-Identifier: Mozilla Public License 2.0
  *
  * This software is distributed under the MPL-2.0 license.
@@ -21,7 +21,7 @@ import (
 	{{- if or (eq .TypeName "SingleNested") }}
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	{{- end }}	
+	{{- end }}
 	{{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	{{- end }}
