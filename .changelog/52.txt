@@ -1,0 +1,3 @@
+```release-note:bug
+`SuperSetNestedAttributeOf[T]` / `SuperListNestedAttributeOf[T]` / `SuperMapNestedAttributeOf[T]` - Fix path-matching validators (e.g. `ConflictsWith`, `ExactlyOneOf`) silently failing inside `Of[T]` nested attributes by setting `NestedObject.CustomType` to `supertypes.NewObjectTypeOf[T](ctx)`, ensuring the framework path walker produces the correct typed value during set/map element traversal.
+```
