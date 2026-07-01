@@ -22,6 +22,7 @@ import (
 	"context"
 
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	schemaE "github.com/hashicorp/terraform-plugin-framework/ephemeral/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
@@ -48,6 +49,15 @@ func (a Attributes) process(ctx context.Context, s schemaType) any {
 			}
 		}
 		return attributes
+
+	case ephemeralT:
+		attributes := make(map[string]schemaE.Attribute)
+		for k, v := range a {
+			if v.IsEphemeral() {
+				attributes[k] = v.GetEphemeral(ctx).(schemaE.Attribute)
+			}
+		}
+		return attributes
 	}
 
 	return nil
@@ -56,6 +66,8 @@ func (a Attributes) process(ctx context.Context, s schemaType) any {
 type Attribute interface {
 	IsResource() bool
 	IsDataSource() bool
+	IsEphemeral() bool
 	GetResource(ctx context.Context) schemaR.Attribute
 	GetDataSource(ctx context.Context) schemaD.Attribute
+	GetEphemeral(ctx context.Context) schemaE.Attribute
 }

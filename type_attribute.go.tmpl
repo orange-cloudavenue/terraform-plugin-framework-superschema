@@ -14,6 +14,7 @@ import (
 	"context"
 
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	schemaE "github.com/hashicorp/terraform-plugin-framework/ephemeral/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
@@ -24,6 +25,7 @@ type {{ .TypeName }}Attribute struct {
 	Common     *schemaR.{{ .TypeName }}Attribute
 	Resource   *schemaR.{{ .TypeName }}Attribute
 	DataSource *schemaD.{{ .TypeName }}Attribute
+	Ephemeral  *schemaE.{{ .TypeName }}Attribute
   {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "SingleNested") (eq .TypeName "MapNested") }}
 	Attributes Attributes
   {{- end }}
@@ -37,6 +39,11 @@ func (s {{ .TypeName }}Attribute) IsResource() bool {
 // IsDataSource returns true if the attribute is a data source attribute.
 func (s {{ .TypeName }}Attribute) IsDataSource() bool {
 	return s.DataSource != nil || s.Common != nil
+}
+
+// IsEphemeral returns true if the attribute is a ephemeral attribute.
+func (s {{ .TypeName }}Attribute) IsEphemeral() bool {
+	return s.Ephemeral != nil || s.Common != nil
 }
 
 //nolint:dupl
@@ -163,6 +170,63 @@ func (s {{ .TypeName }}Attribute) GetDataSource(ctx context.Context) schemaD.Att
 		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
 	}
 
-	a.MarkdownDescription = genDataSourceAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
+	return a
+}
+
+//nolint:dupl
+func (s {{ .TypeName }}Attribute) GetEphemeral(ctx context.Context) schemaE.Attribute {
+	var (
+		common    schemaR.{{ .TypeName }}Attribute
+		ephemeral schemaE.{{ .TypeName }}Attribute
+	)
+
+	if s.Common != nil {
+		common = *s.Common
+	}
+
+	if s.DataSource != nil {
+		ephemeral = *s.Ephemeral
+	}
+
+	a := schemaE.{{ .TypeName }}Attribute{
+		Required:            computeIsRequired(common, ephemeral),
+		Optional:            computeIsOptional(common, ephemeral),
+		Computed:            computeIsComputed(common, ephemeral),
+		Sensitive:           computeIsSensitive(common, ephemeral),
+		MarkdownDescription: computeMarkdownDescription(common, ephemeral),
+		Description:         computeDescription(common, ephemeral),
+		DeprecationMessage:  computeDeprecationMessage(common, ephemeral),
+    {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+		ElementType:         common.ElementType,
+    {{- end }}
+    {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+		NestedObject: schemaE.NestedAttributeObject{
+			Attributes: s.Attributes.process(ctx, ephemeralT).(map[string]schemaE.Attribute),
+		},
+    {{- end }}
+	{{- if (eq .TypeName "SingleNested") }}
+		Attributes: s.Attributes.process(ctx, ephemeralT).(map[string]schemaE.Attribute),
+    {{- end }}
+	}
+
+  {{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
+  if s.Ephemeral != nil {
+    if s.Ephemeral.ElementType != nil {
+      a.ElementType = s.Ephemeral.ElementType
+    }
+  }
+  {{- end }}
+
+	a.Validators = append(a.Validators, common.Validators...)
+	a.Validators = append(a.Validators, ephemeral.Validators...)
+
+	deprecationMessage := ""
+	if s.Deprecated != nil {
+		a.DeprecationMessage = s.Deprecated.DeprecationMessage
+		deprecationMessage = s.Deprecated.computeDeprecatedDocumentation()
+	}
+
+	a.MarkdownDescription = genDataSourceOrEphemeralAttrDescription(ctx, a.MarkdownDescription, deprecationMessage, a.Validators)
 	return a
 }
