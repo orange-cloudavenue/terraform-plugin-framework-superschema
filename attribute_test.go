@@ -131,7 +131,7 @@ func TestStringAttributeGetResource(t *testing.T) {
 			name: "Common + Resource merge",
 			attr: StringAttribute{
 				Common:   &schemaR.StringAttribute{Required: true, Description: "base"},
-				Resource: &schemaR.StringAttribute{Optional: true, Description: "resource"},
+				Resource: &schemaR.StringAttribute{Optional: true, Description: descResource},
 			},
 			expectedReq:  true, // Required from Common: true
 			expectedOpt:  true, // Optional from Resource: true
@@ -141,8 +141,8 @@ func TestStringAttributeGetResource(t *testing.T) {
 		{
 			name: "All three set - union logic",
 			attr: StringAttribute{
-				Common:   &schemaR.StringAttribute{Required: true, Description: "common"},
-				Resource: &schemaR.StringAttribute{Computed: true, Description: "resource"},
+				Common:   &schemaR.StringAttribute{Required: true, Description: descCommon},
+				Resource: &schemaR.StringAttribute{Computed: true, Description: descResource},
 			},
 			expectedReq:  true, // from Common
 			expectedOpt:  false,
@@ -242,7 +242,7 @@ func TestBoolAttributeIsResource(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "only Common set",
+			name:     testOnlyCommonSet,
 			attr:     BoolAttribute{Common: &schemaR.BoolAttribute{}, Resource: nil},
 			expected: true,
 		},
@@ -252,7 +252,7 @@ func TestBoolAttributeIsResource(t *testing.T) {
 			expected: true,
 		},
 		{
-			name:     "neither set",
+			name:     testNeitherSet,
 			attr:     BoolAttribute{Common: nil, Resource: nil},
 			expected: false,
 		},
@@ -276,7 +276,7 @@ func TestBoolAttributeIsDataSource(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "only Common set",
+			name:     testOnlyCommonSet,
 			attr:     BoolAttribute{Common: &schemaR.BoolAttribute{}, DataSource: nil},
 			expected: true,
 		},
@@ -286,7 +286,7 @@ func TestBoolAttributeIsDataSource(t *testing.T) {
 			expected: true,
 		},
 		{
-			name:     "neither set",
+			name:     testNeitherSet,
 			attr:     BoolAttribute{Common: nil, DataSource: nil},
 			expected: false,
 		},
@@ -309,7 +309,7 @@ func TestInt64AttributeGetResource(t *testing.T) {
 	attr := Int64Attribute{
 		Common: &schemaR.Int64Attribute{
 			Required:    true,
-			Description: "common desc",
+			Description: descCommonDesc,
 		},
 		Resource: &schemaR.Int64Attribute{
 			Description: "resource desc",
@@ -356,7 +356,7 @@ func TestListNestedAttributeStructure(t *testing.T) {
 	attr := ListNestedAttribute{
 		Common: &schemaR.ListNestedAttribute{},
 		Attributes: Attributes{
-			"name": StringAttribute{
+			attrName: StringAttribute{
 				Common: &schemaR.StringAttribute{Required: true},
 			},
 		},
@@ -400,7 +400,7 @@ func TestSingleNestedAttributeGetResource(t *testing.T) {
 			Optional: true,
 		},
 		Attributes: Attributes{
-			"field": StringAttribute{
+			attrField: StringAttribute{
 				Resource: &schemaR.StringAttribute{Required: true},
 			},
 		},

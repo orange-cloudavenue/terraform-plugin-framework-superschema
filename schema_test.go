@@ -22,14 +22,14 @@ func TestAttributesProcessResource(t *testing.T) {
 
 	attrs := Attributes{
 		"common_only": StringAttribute{
-			Common: &schemaR.StringAttribute{Description: "common only"},
+			Common: &schemaR.StringAttribute{Description: testCommonOnly},
 		},
 		"resource_only": StringAttribute{
 			Resource: &schemaR.StringAttribute{Description: "resource only"},
 		},
 		"both": StringAttribute{
-			Common:   &schemaR.StringAttribute{Description: "common"},
-			Resource: &schemaR.StringAttribute{Description: "resource"},
+			Common:   &schemaR.StringAttribute{Description: descCommon},
+			Resource: &schemaR.StringAttribute{Description: descResource},
 		},
 		"datasource_only": StringAttribute{
 			DataSource: &schemaD.StringAttribute{Description: "datasource only"},
@@ -68,13 +68,13 @@ func TestAttributesProcessDataSource(t *testing.T) {
 
 	attrs := Attributes{
 		"common_only": StringAttribute{
-			Common: &schemaR.StringAttribute{Description: "common only"},
+			Common: &schemaR.StringAttribute{Description: testCommonOnly},
 		},
 		"datasource_only": StringAttribute{
 			DataSource: &schemaD.StringAttribute{Description: "datasource only"},
 		},
 		"both": StringAttribute{
-			Common:     &schemaR.StringAttribute{Description: "common"},
+			Common:     &schemaR.StringAttribute{Description: descCommon},
 			DataSource: &schemaD.StringAttribute{Description: "datasource"},
 		},
 		"resource_only": StringAttribute{
@@ -146,7 +146,7 @@ func TestSchemaGetResource(t *testing.T) {
 			MarkdownDescription: "resource specific",
 		},
 		Attributes: Attributes{
-			"name": StringAttribute{
+			attrName: StringAttribute{
 				Resource: &schemaR.StringAttribute{Required: true},
 			},
 			"id": StringAttribute{
@@ -185,7 +185,7 @@ func TestSchemaGetDataSource(t *testing.T) {
 			"id": StringAttribute{
 				DataSource: &schemaD.StringAttribute{Computed: true},
 			},
-			"name": StringAttribute{
+			attrName: StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 			},
 		},
@@ -212,7 +212,7 @@ func TestSchemaResourceOnly(t *testing.T) {
 
 	schema := Schema{
 		Attributes: Attributes{
-			"name": StringAttribute{
+			attrName: StringAttribute{
 				Resource: &schemaR.StringAttribute{Required: true},
 			},
 		},
@@ -291,7 +291,7 @@ func TestComplexSchema(t *testing.T) {
 			"id": StringAttribute{
 				DataSource: &schemaD.StringAttribute{Computed: true},
 			},
-			"name": StringAttribute{
+			attrName: StringAttribute{
 				Common: &schemaR.StringAttribute{Required: true},
 			},
 			"tags": MapAttribute{

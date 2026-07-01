@@ -23,7 +23,7 @@ func TestDeprecatedAttribute(t *testing.T) {
 	attr := StringAttribute{
 		Common: &schemaR.StringAttribute{Optional: true, Description: "old field"},
 		Deprecated: &Deprecated{
-			DeprecationMessage: "Use new_field instead",
+			DeprecationMessage: deprUseNewField,
 		},
 	}
 
@@ -33,7 +33,7 @@ func TestDeprecatedAttribute(t *testing.T) {
 		t.Fatalf("expected schemaR.StringAttribute, got %T", result)
 	}
 
-	if resAttr.DeprecationMessage != "Use new_field instead" {
+	if resAttr.DeprecationMessage != deprUseNewField {
 		t.Errorf("expected deprecation message, got %q", resAttr.DeprecationMessage)
 	}
 }
@@ -70,7 +70,7 @@ func TestDeprecatedWithDescription(t *testing.T) {
 			Description: "resource specific",
 		},
 		Deprecated: &Deprecated{
-			DeprecationMessage: "Use new_field instead",
+			DeprecationMessage: deprUseNewField,
 		},
 	}
 
@@ -141,7 +141,7 @@ func TestDeprecatedNestedAttribute(t *testing.T) {
 	attr := ListNestedAttribute{
 		Common: &schemaR.ListNestedAttribute{Optional: true},
 		Attributes: Attributes{
-			"field": StringAttribute{
+			attrField: StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 			},
 		},
@@ -173,7 +173,7 @@ func TestSchemaWithDeprecatedAttributes(t *testing.T) {
 			"old_field": StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 				Deprecated: &Deprecated{
-					DeprecationMessage: "Use new_field instead",
+					DeprecationMessage: deprUseNewField,
 				},
 			},
 		},

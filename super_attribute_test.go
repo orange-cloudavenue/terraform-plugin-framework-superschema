@@ -25,25 +25,25 @@ func TestComputeIsRequired(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "both false",
+			name:     testBothFalse,
 			common:   schemaR.StringAttribute{Required: false},
 			target:   schemaR.StringAttribute{Required: false},
 			expected: false,
 		},
 		{
-			name:     "common true, target false",
+			name:     testCommonTrueTargetFalse,
 			common:   schemaR.StringAttribute{Required: true},
 			target:   schemaR.StringAttribute{Required: false},
 			expected: true,
 		},
 		{
-			name:     "common false, target true",
+			name:     testCommonFalseTargetTrue,
 			common:   schemaR.StringAttribute{Required: false},
 			target:   schemaR.StringAttribute{Required: true},
 			expected: true,
 		},
 		{
-			name:     "both true",
+			name:     testBothTrue,
 			common:   schemaR.StringAttribute{Required: true},
 			target:   schemaR.StringAttribute{Required: true},
 			expected: true,
@@ -69,25 +69,25 @@ func TestComputeIsOptional(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "both false",
+			name:     testBothFalse,
 			common:   schemaR.StringAttribute{Optional: false},
 			target:   schemaR.StringAttribute{Optional: false},
 			expected: false,
 		},
 		{
-			name:     "common true, target false",
+			name:     testCommonTrueTargetFalse,
 			common:   schemaR.StringAttribute{Optional: true},
 			target:   schemaR.StringAttribute{Optional: false},
 			expected: true,
 		},
 		{
-			name:     "common false, target true",
+			name:     testCommonFalseTargetTrue,
 			common:   schemaR.StringAttribute{Optional: false},
 			target:   schemaR.StringAttribute{Optional: true},
 			expected: true,
 		},
 		{
-			name:     "both true",
+			name:     testBothTrue,
 			common:   schemaR.StringAttribute{Optional: true},
 			target:   schemaR.StringAttribute{Optional: true},
 			expected: true,
@@ -113,25 +113,25 @@ func TestComputeIsComputed(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "both false",
+			name:     testBothFalse,
 			common:   schemaR.StringAttribute{Computed: false},
 			target:   schemaR.StringAttribute{Computed: false},
 			expected: false,
 		},
 		{
-			name:     "common true, target false",
+			name:     testCommonTrueTargetFalse,
 			common:   schemaR.StringAttribute{Computed: true},
 			target:   schemaR.StringAttribute{Computed: false},
 			expected: true,
 		},
 		{
-			name:     "common false, target true",
+			name:     testCommonFalseTargetTrue,
 			common:   schemaR.StringAttribute{Computed: false},
 			target:   schemaR.StringAttribute{Computed: true},
 			expected: true,
 		},
 		{
-			name:     "both true",
+			name:     testBothTrue,
 			common:   schemaR.StringAttribute{Computed: true},
 			target:   schemaR.StringAttribute{Computed: true},
 			expected: true,
@@ -157,25 +157,25 @@ func TestComputeIsSensitive(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "both false",
+			name:     testBothFalse,
 			common:   schemaR.StringAttribute{Sensitive: false},
 			target:   schemaR.StringAttribute{Sensitive: false},
 			expected: false,
 		},
 		{
-			name:     "common true, target false",
+			name:     testCommonTrueTargetFalse,
 			common:   schemaR.StringAttribute{Sensitive: true},
 			target:   schemaR.StringAttribute{Sensitive: false},
 			expected: true,
 		},
 		{
-			name:     "common false, target true",
+			name:     testCommonFalseTargetTrue,
 			common:   schemaR.StringAttribute{Sensitive: false},
 			target:   schemaR.StringAttribute{Sensitive: true},
 			expected: true,
 		},
 		{
-			name:     "both true",
+			name:     testBothTrue,
 			common:   schemaR.StringAttribute{Sensitive: true},
 			target:   schemaR.StringAttribute{Sensitive: true},
 			expected: true,
@@ -201,25 +201,25 @@ func TestComputeIsWriteOnly(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "both false",
+			name:     testBothFalse,
 			common:   schemaR.StringAttribute{WriteOnly: false},
 			target:   schemaR.StringAttribute{WriteOnly: false},
 			expected: false,
 		},
 		{
-			name:     "common true, target false",
+			name:     testCommonTrueTargetFalse,
 			common:   schemaR.StringAttribute{WriteOnly: true},
 			target:   schemaR.StringAttribute{WriteOnly: false},
 			expected: true,
 		},
 		{
-			name:     "common false, target true",
+			name:     testCommonFalseTargetTrue,
 			common:   schemaR.StringAttribute{WriteOnly: false},
 			target:   schemaR.StringAttribute{WriteOnly: true},
 			expected: true,
 		},
 		{
-			name:     "both true",
+			name:     testBothTrue,
 			common:   schemaR.StringAttribute{WriteOnly: true},
 			target:   schemaR.StringAttribute{WriteOnly: true},
 			expected: true,
@@ -245,27 +245,27 @@ func TestComputeMarkdownDescription(t *testing.T) {
 		expected string
 	}{
 		{
-			name:     "both empty",
+			name:     testBothEmpty,
 			common:   schemaR.StringAttribute{MarkdownDescription: ""},
 			target:   schemaR.StringAttribute{MarkdownDescription: ""},
 			expected: "",
 		},
 		{
-			name:     "only common",
+			name:     testOnlyCommon,
 			common:   schemaR.StringAttribute{MarkdownDescription: "common description"},
 			target:   schemaR.StringAttribute{MarkdownDescription: ""},
 			expected: "common description",
 		},
 		{
-			name:     "only target",
+			name:     testOnlyTarget,
 			common:   schemaR.StringAttribute{MarkdownDescription: ""},
 			target:   schemaR.StringAttribute{MarkdownDescription: "target description"},
 			expected: "target description",
 		},
 		{
-			name:     "both present",
-			common:   schemaR.StringAttribute{MarkdownDescription: "common"},
-			target:   schemaR.StringAttribute{MarkdownDescription: "target"},
+			name:     testBothPresent,
+			common:   schemaR.StringAttribute{MarkdownDescription: descCommon},
+			target:   schemaR.StringAttribute{MarkdownDescription: descTarget},
 			expected: "common target",
 		},
 		{
@@ -295,26 +295,26 @@ func TestComputeDescription(t *testing.T) {
 		expected string
 	}{
 		{
-			name:     "both empty",
+			name:     testBothEmpty,
 			common:   schemaR.StringAttribute{Description: ""},
 			target:   schemaR.StringAttribute{Description: ""},
 			expected: "",
 		},
 		{
-			name:     "only common",
-			common:   schemaR.StringAttribute{Description: "common"},
+			name:     testOnlyCommon,
+			common:   schemaR.StringAttribute{Description: descCommon},
 			target:   schemaR.StringAttribute{Description: ""},
 			expected: "common",
 		},
 		{
-			name:     "only target",
+			name:     testOnlyTarget,
 			common:   schemaR.StringAttribute{Description: ""},
 			target:   schemaR.StringAttribute{Description: "target"},
-			expected: "target",
+			expected: descTarget,
 		},
 		{
-			name:     "both present",
-			common:   schemaR.StringAttribute{Description: "common"},
+			name:     testBothPresent,
+			common:   schemaR.StringAttribute{Description: descCommon},
 			target:   schemaR.StringAttribute{Description: "target"},
 			expected: "common target",
 		},
@@ -339,25 +339,25 @@ func TestComputeDeprecationMessage(t *testing.T) {
 		expected string
 	}{
 		{
-			name:     "both empty",
+			name:     testBothEmpty,
 			common:   schemaR.StringAttribute{DeprecationMessage: ""},
 			target:   schemaR.StringAttribute{DeprecationMessage: ""},
 			expected: "",
 		},
 		{
-			name:     "only common",
+			name:     testOnlyCommon,
 			common:   schemaR.StringAttribute{DeprecationMessage: "use new field"},
 			target:   schemaR.StringAttribute{DeprecationMessage: ""},
-			expected: "use new field",
+			expected: testUseNewField,
 		},
 		{
-			name:     "only target",
+			name:     testOnlyTarget,
 			common:   schemaR.StringAttribute{DeprecationMessage: ""},
 			target:   schemaR.StringAttribute{DeprecationMessage: "use new field"},
-			expected: "use new field",
+			expected: testUseNewField,
 		},
 		{
-			name:     "both present",
+			name:     testBothPresent,
 			common:   schemaR.StringAttribute{DeprecationMessage: "common reason"},
 			target:   schemaR.StringAttribute{DeprecationMessage: "target reason"},
 			expected: "common reason target reason",
@@ -383,16 +383,16 @@ func TestComputeDescriptionWithDataSourceAttribute(t *testing.T) {
 		expected string
 	}{
 		{
-			name:     "both empty",
+			name:     testBothEmpty,
 			common:   schemaR.StringAttribute{Description: ""},
 			target:   schemaD.StringAttribute{Description: ""},
 			expected: "",
 		},
 		{
-			name:     "common only",
+			name:     testCommonOnly,
 			common:   schemaR.StringAttribute{Description: "common desc"},
 			target:   schemaD.StringAttribute{Description: ""},
-			expected: "common desc",
+			expected: descCommonDesc,
 		},
 		{
 			name:     "target only",
@@ -401,8 +401,8 @@ func TestComputeDescriptionWithDataSourceAttribute(t *testing.T) {
 			expected: "datasource desc",
 		},
 		{
-			name:     "both present",
-			common:   schemaR.StringAttribute{Description: "common"},
+			name:     testBothPresent,
+			common:   schemaR.StringAttribute{Description: descCommon},
 			target:   schemaD.StringAttribute{Description: "datasource"},
 			expected: "common datasource",
 		},

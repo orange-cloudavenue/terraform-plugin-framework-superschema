@@ -14,9 +14,10 @@ import (
 	"reflect"
 	"testing"
 
+	supertypes "github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
+
 	schemaD "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	schemaR "github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	supertypes "github.com/orange-cloudavenue/terraform-plugin-framework-supertypes"
 )
 
 // TestType is a simple struct used for testing generic Super*NestedAttributeOf[T] types.
@@ -33,7 +34,7 @@ func TestSuperSetNestedAttributeOfIsResource(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "only Common set",
+			name:     testOnlyCommonSet,
 			attr:     SuperSetNestedAttributeOf[TestType]{Common: &schemaR.SetNestedAttribute{}, Resource: nil},
 			expected: true,
 		},
@@ -43,7 +44,7 @@ func TestSuperSetNestedAttributeOfIsResource(t *testing.T) {
 			expected: true,
 		},
 		{
-			name:     "neither set",
+			name:     testNeitherSet,
 			attr:     SuperSetNestedAttributeOf[TestType]{Common: nil, Resource: nil},
 			expected: false,
 		},
@@ -67,7 +68,7 @@ func TestSuperSetNestedAttributeOfIsDataSource(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "only Common set",
+			name:     testOnlyCommonSet,
 			attr:     SuperSetNestedAttributeOf[TestType]{Common: &schemaR.SetNestedAttribute{}, DataSource: nil},
 			expected: true,
 		},
@@ -77,7 +78,7 @@ func TestSuperSetNestedAttributeOfIsDataSource(t *testing.T) {
 			expected: true,
 		},
 		{
-			name:     "neither set",
+			name:     testNeitherSet,
 			attr:     SuperSetNestedAttributeOf[TestType]{Common: nil, DataSource: nil},
 			expected: false,
 		},
@@ -103,7 +104,7 @@ func TestSuperSetNestedAttributeOfGetResourceNestedObjectCustomType(t *testing.T
 			Optional: true,
 		},
 		Attributes: Attributes{
-			"name": StringAttribute{
+			attrName: StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 			},
 		},
@@ -168,7 +169,7 @@ func TestSuperListNestedAttributeOfGetResourceNestedObjectCustomType(t *testing.
 			Optional: true,
 		},
 		Attributes: Attributes{
-			"field": StringAttribute{
+			attrField: StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 			},
 		},
@@ -218,14 +219,14 @@ func TestSuperSetNestedAttributeOfMergeLogic(t *testing.T) {
 	attr := SuperSetNestedAttributeOf[TestType]{
 		Common: &schemaR.SetNestedAttribute{
 			Required:    true,
-			Description: "common desc",
+			Description: descCommonDesc,
 		},
 		Resource: &schemaR.SetNestedAttribute{
 			Optional:    true,
 			Description: "resource desc",
 		},
 		Attributes: Attributes{
-			"field": StringAttribute{
+			attrField: StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 			},
 		},
@@ -258,7 +259,7 @@ func TestSuperSetNestedAttributeOfWithDeprecation(t *testing.T) {
 			DeprecationMessage: "Use new_set_nested instead",
 		},
 		Attributes: Attributes{
-			"field": StringAttribute{
+			attrField: StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 			},
 		},
@@ -282,7 +283,7 @@ func TestSuperSetNestedAttributeOfNestedAttributesProcessing(t *testing.T) {
 	attr := SuperSetNestedAttributeOf[TestType]{
 		Common: &schemaR.SetNestedAttribute{Optional: true},
 		Attributes: Attributes{
-			"name": StringAttribute{
+			attrName: StringAttribute{
 				Common: &schemaR.StringAttribute{Required: true},
 			},
 			"description": StringAttribute{
@@ -403,7 +404,7 @@ func TestSuperSingleNestedAttributeOfGetResource(t *testing.T) {
 			Optional: true,
 		},
 		Attributes: Attributes{
-			"field": StringAttribute{
+			attrField: StringAttribute{
 				Common: &schemaR.StringAttribute{Optional: true},
 			},
 		},
