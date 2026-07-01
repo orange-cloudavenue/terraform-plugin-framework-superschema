@@ -1,5 +1,9 @@
 ## 1.12.0 (Unreleased)
 
+### :tada: **Improvements**
+
+* `superschema` - Bump Go from 1.22.0 to 1.25.0, terraform-plugin-framework from v1.14.1 to v1.19.0, and terraform-plugin-framework-timeouts from v0.5.0 to v0.7.0. (GH-56)
+
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/orange-cloudavenue/terraform-plugin-framework-supertypes from 1.0.0 to 1.1.0 (GH-33)
