@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2025 Orange
+ * SPDX-FileCopyrightText: Copyright (c) 2026 Orange
  * SPDX-License-Identifier: Mozilla Public License 2.0
  *
  * This software is distributed under the MPL-2.0 license.
@@ -21,7 +21,7 @@ import (
 	{{- if or (eq .TypeName "SingleNested") }}
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	{{- end }}	
+	{{- end }}
 	{{- if or (eq .TypeName "List") (eq .TypeName "Set") (eq .TypeName "Map") }}
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	{{- end }}
@@ -413,8 +413,13 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetResource(ctx context.Context) sch
 		ElementType:         common.ElementType,
     {{- end }}
     {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+		// NestedObject.CustomType is always derived from T so the framework path walker
+		// produces ObjectValueOf[T] (not basetypes.ObjectValue) when traversing elements,
+		// which is required for path-matching validators (ConflictsWith, ExactlyOneOf, etc.)
+		// to resolve correctly. Unlike the outer CustomType, this is not caller-overridable.
 		NestedObject: schemaR.NestedAttributeObject{
 			Attributes: s.Attributes.process(ctx, resourceT).(map[string]schemaR.Attribute),
+			CustomType: supertypes.NewObjectTypeOf[T](ctx),
 		},
     {{- end }}
 	{{- if (eq .TypeName "SingleNested") }}
@@ -503,8 +508,13 @@ func (s Super{{ .TypeName }}AttributeOf[T]) GetDataSource(ctx context.Context) s
 		ElementType:         common.ElementType,
     {{- end }}
     {{- if or (eq .TypeName "ListNested") (eq .TypeName "SetNested") (eq .TypeName "MapNested") }}
+		// NestedObject.CustomType is always derived from T so the framework path walker
+		// produces ObjectValueOf[T] (not basetypes.ObjectValue) when traversing elements,
+		// which is required for path-matching validators (ConflictsWith, ExactlyOneOf, etc.)
+		// to resolve correctly. Unlike the outer CustomType, this is not caller-overridable.
 		NestedObject: schemaD.NestedAttributeObject{
 			Attributes: s.Attributes.process(ctx, dataSourceT).(map[string]schemaD.Attribute),
+			CustomType: supertypes.NewObjectTypeOf[T](ctx),
 		},
     {{- end }}
 	{{- if (eq .TypeName "SingleNested") }}
