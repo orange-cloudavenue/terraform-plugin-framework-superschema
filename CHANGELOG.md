@@ -4,6 +4,10 @@
 
 * `superschema` - Bump Go from 1.22.0 to 1.25.0, terraform-plugin-framework from v1.14.1 to v1.19.0, and terraform-plugin-framework-timeouts from v0.5.0 to v0.7.0. (GH-56)
 
+### :bug: **Bug Fixes**
+
+* `SuperSetNestedAttributeOf[T]` / `SuperListNestedAttributeOf[T]` / `SuperMapNestedAttributeOf[T]` - Fix path-matching validators (e.g. `ConflictsWith`, `ExactlyOneOf`) silently failing inside `Of[T]` nested attributes by setting `NestedObject.CustomType` to `supertypes.NewObjectTypeOf[T](ctx)`, ensuring the framework path walker produces the correct typed value during set/map element traversal. (GH-54)
+
 ### :dependabot: **Dependencies**
 
 * deps: bumps github.com/orange-cloudavenue/terraform-plugin-framework-supertypes from 1.0.0 to 1.1.0 (GH-33)
